@@ -3,7 +3,7 @@
 /**
  * insert_nodeint_at_index - inserts node at index
  * @head: pointer to head
- * @idx: index to insert
+ * @idx: index
  * @n: value
  *
  * Return: pointer to new node or NULL
@@ -35,8 +35,7 @@ listint_t *insert_nodeint_at_index(listint_t **head,
 	for (i = 0; temp && i < idx - 1; i++)
 		temp = temp->next;
 
-	/* IMPORTANT FIX: allow append at end */
-	if (temp == NULL)
+	if (!temp)
 		return (NULL);
 
 	new_node = malloc(sizeof(listint_t));
