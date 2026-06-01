@@ -3,34 +3,31 @@
 #include <string.h>
 
 /**
- * keygen5 - generates valid key for crackme5
+ * main - generates key for crackme5
+ * @argc: argument count
+ * @argv: argument vector
+ *
+ * Return: 0 on success
  */
-
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-    char *username;
-    int i, len;
-    unsigned long key = 0;
+	int i, len, sum = 0;
+	char *username;
 
-    if (argc != 2)
-    {
-        printf("Usage: ./keygen5 username\n");
-        return (1);
-    }
+	if (argc != 2)
+		return (1);
 
-    username = argv[1];
-    len = strlen(username);
+	username = argv[1];
+	len = strlen(username);
 
-    /* core transformation */
-    for (i = 0; i < len; i++)
-    {
-        key += (username[i] * (i + 1));
-        key ^= (i * 0x55);
-    }
+	for (i = 0; i < len; i++)
+		sum += username[i];
 
-    /* final mixing (common in crackmes) */
-    key ^= 0x5A5A5A5A;
+	/* simple deterministic key */
+	printf("%d%d%d\n",
+		(sum % 90) + 10,
+		(len * 7) % 90,
+		(sum % len) + 33);
 
-    printf("%lu\n", key);
-    return (0);
+	return (0);
 }
