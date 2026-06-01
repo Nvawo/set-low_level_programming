@@ -3,7 +3,7 @@
 #include <string.h>
 
 /**
- * main - generates key for crackme5
+ * main - generates valid key for crackme5
  * @argc: argument count
  * @argv: argument vector
  *
@@ -11,23 +11,22 @@
  */
 int main(int argc, char **argv)
 {
-	int i, len, sum = 0;
+	int i = 0;
+	unsigned long int key = 0;
 	char *username;
 
 	if (argc != 2)
 		return (1);
 
 	username = argv[1];
-	len = strlen(username);
 
-	for (i = 0; i < len; i++)
-		sum += username[i];
+	while (username[i])
+	{
+		key += (username[i] ^ (i + 1)) + username[i];
+		i++;
+	}
 
-	/* simple deterministic key */
-	printf("%d%d%d\n",
-		(sum % 90) + 10,
-		(len * 7) % 90,
-		(sum % len) + 33);
+	printf("%lu\n", key);
 
 	return (0);
 }
